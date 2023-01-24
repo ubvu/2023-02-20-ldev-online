@@ -112,7 +112,45 @@ workshop is only open to people from a particular institution.
 {% endif %}
 
 {% comment %}
+LOCATION
 
+This block displays the address and links to maps showing directions
+if the latitude and longitude of the workshop have been set.  You
+can use https://www.latlong.net/ to find the lat/long of an
+address.
+{% endcomment %}
+{% assign begin_address = page.address | slice: 0, 4 | downcase  %}
+{% if page.address == "online" %}
+{% assign online = "true_private" %}
+{% elsif begin_address contains "http" %}
+{% assign online = "true_public" %}
+{% else %}
+{% assign online = "false" %}
+{% endif %}
+{% if page.latitude and page.longitude and online == "false" %}
+<p id="where">
+  <strong>Where:</strong>
+  {{page.address}}.
+  Get directions with
+  <a href="//www.openstreetmap.org/?mlat={{page.latitude}}&mlon={{page.longitude}}&zoom=16">OpenStreetMap</a>
+  or
+  <a href="//maps.google.com/maps?q={{page.latitude}},{{page.longitude}}">Google Maps</a>.
+</p>
+{% elsif online == "true_public" %}
+<p id="where">
+  <strong>Where:</strong>
+  online at <a href="{{page.address}}">{{page.address}}</a>.
+  If you need a password or other information to access the training,
+  the instructor will pass it on to you before the workshop.
+</p>
+{% elsif online == "true_private" %}
+<p id="where">
+  <strong>Where:</strong> This training will take place online.
+  The instructors will provide you with the information you will need to connect to this meeting.
+</p>
+{% endif %}
+
+{% comment %}
 DATE
 
 This block displays the date and links to Google Calendar.
@@ -219,11 +257,13 @@ Edit the text to match who can attend the workshop. For instance:
 - If you are interested in attending this workshop, contact me@example.com
   for more information
 
+{% endcomment %}
+  
 <p id="who-can-attend">
     <strong>Who can attend?:</strong>
-    This workshop is open to ....
+    This workshop is open to affiliates to Leiden University, TU Delft, Erasmus University Rotterdam, and VU Amsterdam.
 </p>
-{% endcomment %}
+
 
 <hr/>
 
@@ -293,7 +333,6 @@ change the value of `carpentry` to `incubator`.
 
 
 {% comment %}
-
 SCHEDULE
 
 Show the workshop's schedule.
@@ -318,6 +357,7 @@ of code below the Schedule `<h2>` header below with
 <h2 id="schedule">Schedule</h2>
 
 {% include custom-schedule.html %}
+
 {% comment %}
 Edit/replace the text above if you want to include a schedule table.
 See the contents of the _includes/custom-schedule.html file for an example of
@@ -331,7 +371,7 @@ The lesson taught in this workshop is being piloted and a precise schedule is ye
 <hr/>
 
 
-
+{% comment %}
 SETUP
 
 Delete irrelevant sections from the setup instructions.  Each
@@ -372,7 +412,7 @@ For online workshops, the section below provides:
 
 If you do not use Zoom for your online workshop, edit the file
 `_includes/install_instructions/videoconferencing.html`
-to include the relevant installation instructions.
+to include the relevant installation instrucctions.
 {% endcomment %}
 {% if online != "false" %}
 {% include install_instructions/videoconferencing.html %}
