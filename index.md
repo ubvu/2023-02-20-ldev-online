@@ -293,6 +293,7 @@ change the value of `carpentry` to `incubator`.
 
 
 {% comment %}
+
 SCHEDULE
 
 Show the workshop's schedule.
@@ -314,18 +315,9 @@ of code below the Schedule `<h2>` header below with
 `{% include custom-schedule.html %}`.
 {% endcomment %}
 
-#<h2 id="schedule">Schedule</h2>
+<h2 id="schedule">Schedule</h2>
+
 {% include custom-schedule.html %}
-{% if site.carpentry == "swc" %}
-{% include swc/schedule.html %}
-{% elsif site.carpentry == "dc" %}
-{% include dc/schedule.html %}
-{% elsif site.carpentry == "lc" %}
-{% include lc/schedule.html %}
-{% elsif site.carpentry == "incubator" %}
-This workshop is teaching a lesson in [The Carpentries Incubator](https://carpentries-incubator.org/).
-Please check [the lesson homepage]({{ site.incubator_lesson_site }}) for a list of lesson sections and estimated timings.
-{% endif %}
 
 {% comment %}
 Edit/replace the text above if you want to include a schedule table.
@@ -340,7 +332,7 @@ The lesson taught in this workshop is being piloted and a precise schedule is ye
 <hr/>
 
 
-{% comment %}
+
 SETUP
 
 Delete irrelevant sections from the setup instructions.  Each
